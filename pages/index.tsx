@@ -64,7 +64,7 @@ const Home: NextPage = () => {
         walletAddress={wallet.publicKey?.toBase58() || ""}
       />
       <div className="flex flex-col items-center justify-center h-full">
-        <Toaster />
+        <Toaster position="top-right" />
         {candyMachine ? (
           <div className="w-full max-w-xl px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
             <h1 className="text-lg font-semibold">CandymMachine Info</h1>
