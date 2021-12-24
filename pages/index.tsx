@@ -11,7 +11,7 @@ import Header from "../components/Header";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { shortenAddress } from "../utils/shortenAddress";
 import Countdown from "react-countdown";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const rpcHost = process.env.NEXT_PUBLIC_SOLANA_RPC_HOST!;
 
@@ -32,26 +32,27 @@ const Home: NextPage = () => {
       if (candyMachineId.length <= 0) return;
 
       setLoading((_) => true);
+
       const anchorWallet = {
         publicKey: wallet.publicKey,
         signAllTransactions: wallet.signAllTransactions,
         signTransaction: wallet.signTransaction,
       } as anchor.Wallet;
 
-      const candyMachine = await getCandyMachineState(
-        anchorWallet,
-        candyMachineId as unknown as anchor.web3.PublicKey,
-        connection
-      );
+      try {
+        const candyMachine = await getCandyMachineState(
+          anchorWallet,
+          candyMachineId as unknown as anchor.web3.PublicKey,
+          connection
+        );
 
-      console.log({
-        candyMachine,
-        price: candyMachine.price / LAMPORTS_PER_SOL,
-      });
-
-      setCandyMachine((_) => candyMachine);
-      setLoading((_) => false);
-      setIsSoldOut((_) => candyMachine.itemsRemaining === 0);
+        setCandyMachine((_) => candyMachine);
+        setLoading((_) => false);
+        setIsSoldOut((_) => candyMachine.itemsRemaining === 0);
+      } catch (err) {
+        setLoading((_) => false);
+        if (err instanceof Error) toast.error(err.message);
+      }
     },
     [wallet.publicKey, wallet.signAllTransactions, wallet.signTransaction]
   );
