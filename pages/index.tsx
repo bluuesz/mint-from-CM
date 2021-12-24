@@ -8,7 +8,7 @@ import { useCallback, useState } from "react";
 import { CandyMachineState, getCandyMachineState } from "../utils/candyMachine";
 import * as anchor from "@project-serum/anchor";
 import Header from "../components/Header";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { shortenAddress } from "../utils/shortenAddress";
 import Countdown from "react-countdown";
 import toast, { Toaster } from "react-hot-toast";
@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       try {
         const candyMachine = await getCandyMachineState(
           anchorWallet,
-          candyMachineId as unknown as anchor.web3.PublicKey,
+          new PublicKey(candyMachineId),
           connection
         );
 
