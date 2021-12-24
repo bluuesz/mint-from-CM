@@ -196,16 +196,16 @@ export const getCandyMachineState = async (
 
         
 
-        const config = await program.account.config.fetch(
-            state.config
-        )
+        // const config = await program.account.config.fetch(
+        //     state.config
+        // )
 
         const itemsAvailable = state.data.itemsAvailable.toNumber();
         const itemsRedeemed = state.itemsRedeemed.toNumber();
         const itemsRemaining = itemsAvailable - itemsRedeemed;
         const price = state.data.price.toNumber()
-        const sellerFeeBasisPoints = config.data.sellerFeeBasisPoints
-        const creators = config.data.creators
+        // const sellerFeeBasisPoints = config.data.sellerFeeBasisPoints
+        // const creators = config.data.creators
         const candyMachineConfigId = state.config
         const treasury = state.wallet
 
