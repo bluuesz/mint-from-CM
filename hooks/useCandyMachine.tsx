@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as anchor from "@project-serum/anchor";
 import {
   awaitTransactionSignatureConfirmation,
   CandyMachine,
-  getCandyMachineState,
-  mintMultipleToken,
   mintOneToken,
 } from "../utils/candyMachine";
 import toast from "react-hot-toast";
