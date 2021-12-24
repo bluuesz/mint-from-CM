@@ -1,7 +1,7 @@
 import * as anchor from "@project-serum/anchor";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { programs } from "@metaplex/js"; // TODO: update version
+import { MetadataProgram, Metadata } from "@metaplex/js"; // TODO: update versions
 
 const rpcHost = process.env.NEXT_PUBLIC_SOLANA_RPC_HOST!;
 const connection = new anchor.web3.Connection(rpcHost);
@@ -9,10 +9,6 @@ export const MAX_NAME_LENGTH = 32;
 export const MAX_URI_LENGTH = 200;
 export const MAX_SYMBOL_LENGTH = 10;
 export const MAX_CREATOR_LEN = 32 + 1 + 1;
-
-const {
-  metadata: { MetadataProgram, Metadata },
-} = programs;
 
 export async function fetchHashTable(
   hash: string,
