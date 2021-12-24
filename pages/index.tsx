@@ -86,7 +86,7 @@ const Home: NextPage = () => {
               {candyMachine.price / LAMPORTS_PER_SOL}
             </p>
 
-            <p className="mt-4 text-sm">
+            {/* <p className="mt-4 text-sm">
               <span className="font-bold">SellerFeeBasisPoints:</span>{" "}
               {candyMachine.sellerFeeBasisPoints / LAMPORTS_PER_SOL}
             </p>
@@ -96,7 +96,7 @@ const Home: NextPage = () => {
               {candyMachine.creators
                 .map((creator) => shortenAddress(creator.address.toBase58(), 6))
                 .join(", ")}
-            </p>
+            </p> */}
 
             {wallet.connected ? (
               <>

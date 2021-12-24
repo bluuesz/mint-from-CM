@@ -38,8 +38,8 @@ export interface CandyMachineState {
     itemsRemaining: number;
     price: number
     goLiveDate: Date;
-    sellerFeeBasisPoints: number;
-    creators: Creators[]
+    // sellerFeeBasisPoints: number;
+    // creators: Creators[]
     candyMachineConfigId: PublicKey
     treasury: PublicKey
 }
@@ -219,8 +219,8 @@ export const getCandyMachineState = async (
             itemsRemaining,
             goLiveDate,
             price,
-            sellerFeeBasisPoints,
-            creators,
+            // sellerFeeBasisPoints,
+            // creators,
             candyMachineConfigId,
             treasury,
         };
