@@ -1,5 +1,5 @@
 import * as anchor from "@project-serum/anchor";
-import { programs } from "@metaplex/js";
+import {  Metadata } from "@metaplex/js";
 
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from "@solana/spl-token";
 import {  sleep } from "./sleep";
@@ -45,9 +45,7 @@ export interface CandyMachineState {
 }
 
 
-const {
-    metadata: { Metadata },
-  } = programs;
+
 
 export const awaitTransactionSignatureConfirmation = async (
     txid: anchor.web3.TransactionSignature,
