@@ -35,15 +35,6 @@ export const WalletBalanceProvider: React.FC = ({ children }) => {
     })();
   }, [wallet]);
 
-  useEffect(() => {
-    (async () => {
-      if (wallet?.publicKey) {
-        const balance = await connection.getBalance(wallet.publicKey);
-        setBalance(balance / LAMPORTS_PER_SOL);
-      }
-    })();
-  }, [wallet]);
-
   return (
     <BalanceContext.Provider value={{ balance, setBalance }}>
       {children}
