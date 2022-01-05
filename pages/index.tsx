@@ -12,6 +12,7 @@ import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { shortenAddress } from "../utils/shortenAddress";
 import Countdown from "react-countdown";
 import toast, { Toaster } from "react-hot-toast";
+import { GrUpdate } from "react-icons/gr";
 
 const rpcHost = process.env.NEXT_PUBLIC_SOLANA_RPC_HOST!;
 
@@ -25,7 +26,13 @@ const Home: NextPage = () => {
   const [candyMachine, setCandyMachine] = useState<CandyMachineState>();
   const [isSoldOut, setIsSoldOut] = useState<boolean>(true);
   const [isMintLive, setIsMintLive] = useState(false);
-  const { isMinting, startMint, isSoldOut: soldOut } = useCandyMachine();
+  const {
+    isMinting,
+    startMint,
+    isSoldOut: soldOut,
+    startMintMultiple,
+  } = useCandyMachine();
+  const [quantity, setQuantity] = useState<number>(1);
 
   const getCandyMachine = useCallback(
     async (candyMachineId: string) => {
@@ -47,6 +54,8 @@ const Home: NextPage = () => {
         );
 
         setCandyMachine((_) => candyMachine);
+        console.log("update");
+
         setLoading((_) => false);
         setIsSoldOut((_) => candyMachine.itemsRemaining === 0);
       } catch (err) {
@@ -68,7 +77,14 @@ const Home: NextPage = () => {
         <Toaster position="top-right" />
         {candyMachine ? (
           <div className="w-full max-w-xl px-8 pt-6 pb-8 mb-4 bg-white rounded shadow-md">
-            <h1 className="text-lg font-semibold">CandymMachine Info</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="text-lg font-semibold">CandymMachine Info</h1>
+              <GrUpdate
+                onClick={() => getCandyMachine(candyMachineId)}
+                className="hover:cursor-pointer"
+                size={15}
+              />
+            </div>
 
             <p className="mt-4 text-sm">
               <span className="font-bold">Name:</span>{" "}
@@ -85,6 +101,15 @@ const Home: NextPage = () => {
               <span className="font-bold">Price:</span>{" "}
               {candyMachine.price / LAMPORTS_PER_SOL}
             </p>
+
+            <input
+              className="w-full px-4 py-2 mt-4 leading-tight text-gray-700 bg-gray-200 border-2 border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-800"
+              id="inline-password"
+              type="number"
+              onChange={(e) => setQuantity(Number(e.target.value))}
+              value={quantity}
+              placeholder="how many"
+            />
 
             {/* <p className="mt-4 text-sm">
               <span className="font-bold">SellerFeeBasisPoints:</span>{" "}
@@ -113,11 +138,19 @@ const Home: NextPage = () => {
                         }`}
                         type="button"
                         onClick={() =>
-                          startMint(
-                            candyMachine.candyMachine,
-                            candyMachine.candyMachineConfigId,
-                            candyMachine.treasury
-                          )
+                          quantity <= 1
+                            ? startMint(
+                                candyMachine.candyMachine,
+                                candyMachine.candyMachineConfigId,
+                                candyMachine.treasury
+                              )
+                            : startMintMultiple(
+                                candyMachine.candyMachine,
+                                candyMachine.candyMachineConfigId,
+                                candyMachine.price / LAMPORTS_PER_SOL,
+                                candyMachine.treasury,
+                                quantity
+                              )
                         }
                       >
                         {isMinting ? "minting..." : "mint"}
