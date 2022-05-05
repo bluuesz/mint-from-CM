@@ -4,7 +4,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import useCandyMachine from "../hooks/useCandyMachine";
 import { useWalletBalance } from "../hooks/useWalletBalance";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { CandyMachineState, getCandyMachineState } from "../utils/candyMachine";
 import * as anchor from "@project-serum/anchor";
 import Header from "../components/Header";
@@ -33,6 +33,10 @@ const Home: NextPage = () => {
     startMintMultiple,
   } = useCandyMachine();
   const [quantity, setQuantity] = useState<number>(1);
+  
+  useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_TESTE)
+  }, [])
 
   const getCandyMachine = useCallback(
     async (candyMachineId: string) => {
